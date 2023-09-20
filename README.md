@@ -41,6 +41,7 @@
         2) What classes it extends
         3) what interfaces it implements
     * How to get the Object os a class
+      ```
       -> Object.getClass()
         String stringObject = "some-string";
         Car car = new Car();
@@ -104,7 +105,7 @@
               Class booleanClass = Class.forName("boolean"); // Runtime Error
               Class intClass = Class.forName("int"); // Runtime Error
               Class doublePrice = Class.forName("double"); // Runtime Error
-
+```
           ~ Much more likely to mistype the class name and get the ClassNotFoundException
           ~ The Class we pass into the Class.forName(...) may not even exist
           ~ Class.forName(...) is the least safest way to get a Class<?> object
