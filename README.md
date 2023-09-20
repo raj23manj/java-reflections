@@ -253,5 +253,30 @@
 
   ## Section 2
     * Object Creation and Constructors
-    
+      - A constructor of a java class is represented by an instance of COnstructor<?> class
+      - The Constructor object contains all the information about the class's constructor including:
+             -> Number of parameters
+             -> Types of the parameters
+      - A Class may have multiple constructors         
+      - Methods to get Constructors <?> objects
+        -> Returns all declared constructors within the class
+        -> Includes all the public and non-public constructors
+      - Class.getConstructors()
+        -> return only public constructors of the class
+      - If we know the particular constructor based on the parameter types we call:  
+        -> Class.getConstructor(Class<?> ...parameterTypes) or Class.getDeclaredConstructors(Class<?> ...parameterTypes)
+           --> returns a particular constructor based on the parameter types
+           --> Throws NoSuchMethodException if no matching constructoro is found
 
+      ```
+        Getting default constructor
+        public class Person {
+          // no declared constructors
+          public Person() {}  // -> Auto Generated default constructor
+        }
+        Constructors<?>[] constructors = Person.class.getConstructors(); // Single element array containing the default constructor
+        Constructors<?>[] constructors = Person.class.getDeclaredConstructors(); // Single element array containing the default constructor
+        
+      ```     
+      
+     
