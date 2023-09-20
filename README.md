@@ -41,7 +41,8 @@
         2) What classes it extends
         3) what interfaces it implements
     * How to get the Object os a class
-      ```
+    
+  ```
       -> Object.getClass()
         String stringObject = "some-string";
         Car car = new Car();
@@ -63,7 +64,7 @@
         Class doublePrice = price.getClass(); compilation error
 
       -> ".class" suffix to a type name
-        ~ used when we don't have a instance of a class, but we need to get information of the class itself(static)
+        --> used when we don't have a instance of a class, but we need to get information of the class itself(static)
           Class<String> stringClass = String.class;
           Class<Car> carClass = Car.class;
           Class<?> mapClass = HashMap.class;
@@ -77,7 +78,7 @@
           Class doubleType = double.class;
 
       -> Class.forName(...)
-          ~ we can dynamically look up any class in the class path using it's fullly qualified name. That includes built in classes also like "String"
+          --> we can dynamically look up any class in the class path using it's fullly qualified name. That includes built in classes also like "String"
 
             Class<?> stringType = Class.forName("java.lang.String");
             Class<?> carType = Class.forName("vechile.car");
@@ -106,17 +107,17 @@
               Class intClass = Class.forName("int"); // Runtime Error
               Class doublePrice = Class.forName("double"); // Runtime Error
 ```
-          ~ Much more likely to mistype the class name and get the ClassNotFoundException
-          ~ The Class we pass into the Class.forName(...) may not even exist
-          ~ Class.forName(...) is the least safest way to get a Class<?> object
-          ~ There are use cases where Class.forNmae(...) is our only option
-          ~ use case
+          --> Much more likely to mistype the class name and get the ClassNotFoundException
+          --> The Class we pass into the Class.forName(...) may not even exist
+          --> Class.forName(...) is the least safest way to get a Class<?> object
+          --> There are use cases where Class.forNmae(...) is our only option
+          --> use case
             a) when the class name is in the config file and we need to instantate the class at runtime
             b) the class we need to instantiate is not a part of the code base, but is added at runtime, like external libraries
 
         -> <?> Generics/wildcards
-          ~ Using Class<?> we can describe a Class Object of any parameter type
-          ~ Class<?> is a super type to Class<T> of any type T
+          --> Using Class<?> we can describe a Class Object of any parameter type
+          --> Class<?> is a super type to Class<T> of any type T
             Class<?> carClass = Class.forName("vechile.Car");
             Map<String, Integer> genericMap = new HashMap<>();
             Class<?> hashMapClass = genericMap.getClass();
