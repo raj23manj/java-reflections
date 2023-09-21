@@ -292,7 +292,15 @@
         -> Depending on the arguments passed to our method, it will find the right constructor
         -> Create the given class object by calling the right constructor
         -> withour reflection it is impossible
-
+        -> Constructor.newInstance(Object ... arguments) 
+           --> Takes a variable number of constructor arguments in the type and order of the constructor
+               parameters declared in the constructor
+           --> upon success
+               ---> calls the appropriate constructor
+               ---> Returns an object of the given class
+           --> upon failure
+               ---> Throws an appropriate exception, describing the reason for the failure
+        
         ```
          without using reflection
 
@@ -301,6 +309,19 @@
            case Type.Employee: return new Employee(arg);
            }
          }
+
+         with reflections
+
+         public static <T> T createInstanceWithArguments(Class<T> clazz, Object ... args) throws IllegalAccessException,
+            InvocationTargetException {
+               for (Constructor<?> constructor : clazz.getDeclaredConstructors()){
+                 if(constructor.getParameterTypes().length === args.length) {
+                   return (T) constructor.newInstance(args);
+                 }
+                 // if no appropriate constructor was found
+                 return null;
+               }
+            }
         ```
       
      
