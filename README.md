@@ -324,4 +324,11 @@
             }
         ```
       
-     
+     - Restricted(Private) Constructor Access
+       -> using reflection we have full access to all
+          --> public
+          --> protected
+          --> package-private
+          --> private
+       -> Using Constructor.newInstance() we can create objects of a class using the restricted constructors
+       
