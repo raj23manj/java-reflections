@@ -313,7 +313,7 @@
          with reflections
 
          public static <T> T createInstanceWithArguments(Class<T> clazz, Object ... args) throws IllegalAccessException,
-            InvocationTargetException {
+            InvocationTargetException, InstantiaonException {
                for (Constructor<?> constructor : clazz.getDeclaredConstructors()){
                  if(constructor.getParameterTypes().length === args.length) {
                    return (T) constructor.newInstance(args);
@@ -331,4 +331,64 @@
           --> package-private
           --> private
        -> Using Constructor.newInstance() we can create objects of a class using the restricted constructors
-       
+       -> Exception: A class belonging to java module that does not allow acces to a given class
+       -> used in cases for server configuration using reflection
+
+       ```
+         Constructor<?> constructor = getDeclaredConstructor();
+         constructor.setAccessible(true); // make constructor accessible
+         constructor.newInstance(arg1, arg1);
+
+         example: 
+         // ServerConfiguration is a singleton class with private constructor
+         Constructor<ServerConfiguration> constructor =         ServerConfiguration.class.getDeclaredConstructor(int.class, String.class);
+         constructor.setAccessible(true);
+         constructor.newInstance(8000, "goodDay");
+         
+       ```
+
+       - Restricted Classes Instantiation - Automatic Dependency Injection implementation
+         -> Package - Private classes Instantiation using Constructor Class
+         -> External Package - Private CLassess access use cases
+         -> Dependency Injection Implementation(Tic Tac Toe Game)
+
+         -> Package-Private classes External Access
+           --> There are cases where we need to allow access to package-private classes from outside the package for 
+             ---> Reading
+             ---> initializing
+           --> Typically when we want to use an external library to help us initialize those classes
+           --> The code in the external libraries is outside of our package
+
+           ```
+                public Object createClassInstance(COnstructor<?> packagePrivateClassCtor, Object ... ctorArgs) {
+                  packagePrivateClassCtor.setAccessible(true);
+                  return packagePrivateClassCtor.newInstance(ctorArgs);
+                } 
+           ```
+           -> Dependency Injection using reflection
+           ```
+             recursive call code
+
+             public static <T> T createObjectRecursively(Class<T> clazz)  throws IllegalAccessException,
+            InvocationTargetException, InstantiaonException {
+              Constructor<?> constructor = getFirstCOnstructor(class);
+              List<Object> constructorArguments = new ArrayList<>();
+
+              for(Class<?> argumentType : constructor.getParametersTypes()) {
+                Object argumentValue = createObjectRecursively(argumentType);
+                constructorArguments.add(argumentValue);
+              }
+
+              constructor.setAccessible(true);
+              return (T) constructor.newInstance(constructorArguments)
+            }
+
+            private static Constructor<?> getFirstConstructor(Class<?> clazz) {
+              Constructor<?> [] constructors = clazz.getDeclaredConstructors();
+              if (Constructors.length == 0) {
+                throw new IllegalStateException(String.format("No COnstructor has been found for class %s", class.getName()));
+              }
+              return constructors[0]; 
+            }
+           ```
+           
