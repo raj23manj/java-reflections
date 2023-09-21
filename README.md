@@ -276,7 +276,31 @@
         }
         Constructors<?>[] constructors = Person.class.getConstructors(); // Single element array containing the default constructor
         Constructors<?>[] constructors = Person.class.getDeclaredConstructors(); // Single element array containing the default constructor
+
+        // To get parameters of the constructors
         
+        for(int i = 0; i < constructors.length; i++) {
+        Class<?>[] parametersTypes = constructors[i].getParameterTypes();
+        List<String> parameterTypeNames = Array.stream(parametersTypes)
+                                          .map(type -> type.getSimpleName())
+                                          .collect(Collectors.toList());                                                
+        }
       ```     
+
+      - To create an object of a class using above method
+        -> Implement a single "factory" method that can create an object of any class
+        -> Depending on the arguments passed to our method, it will find the right constructor
+        -> Create the given class object by calling the right constructor
+        -> withour reflection it is impossible
+
+        ```
+         without using reflection
+
+         public Object createObject(Typw typw, Object arg) {
+           switch(type) {
+           case Type.Employee: return new Employee(arg);
+           }
+         }
+        ```
       
      
