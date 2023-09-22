@@ -388,7 +388,51 @@
               if (Constructors.length == 0) {
                 throw new IllegalStateException(String.format("No COnstructor has been found for class %s", class.getName()));
               }
+              
               return constructors[0]; 
+         }
+           ``
+
+     ## Section 3
+      - Inspection of fields
+        -> Class.getDeclaredFields() - get all declared fields of a class
+           --> includes all fields regardless of their access modifiers
+           --> Excludes inherited fields
+        -> Class.getFields() - get all the public fields of a class
+           --> includes inherited fields
+        -> If we know the fields name: 
+           --> Class.getDeclaredField(fieldName) - get the field object corresponding to the declared field with the given name
+           --> Class.getField(fieldName) - get the Field object corresponding to the public field with the given name
+         -> if the field with the given fieldName does not exisits a NoSuchFieldException is thrown  
+         -> Synthetic field
+            --> java compiler generates artificial fields for internal usage
+            --> we don't see those fields unless we use reflection to discover them at runtime
+            --> Synthetic fields and their names are compiler specific
+            --> in most cases we don't want to touch/modify/rely on them
+            --> To find out if a field is synthetic we can check with Field.isIsyntheic()
+          ```
+            public static  void printDeclaredFieldsInfo(class<?> clazz) {
+              for(Field field : clazz.getDeclaredFields()) {
+              // field.getName()
+              // field.getType().getName()
+              // field.isSynthetic()
+              }
             }
-           ```
+          ```
+
+          -> Get Field values
+            --> to get value of field Field.get(<instance of the class>)
+
+          ``
+            public static <T> void printDeclaredFieldsInfo(class<? extends T> clazz, T instance) throws illegalAccessException {
+              for(Field field : clazz.getDeclaredFields()) {
+              // field.getName()
+              // field.getType().getName()
+              // field.isSynthetic()
+              // field.get(instance)
+              }
+            }
+          ```
+            
+           `
            
